@@ -35,7 +35,7 @@ export default class DailyMotion extends Component {
         height: '100%',
         video: id,
         params: {
-          controls: controls,
+          controls,
           autoplay: this.props.playing,
           mute: this.props.muted,
           start: parseStartTime(url),
@@ -73,8 +73,11 @@ export default class DailyMotion extends Component {
     // Nothing to do
   }
 
-  seekTo (seconds) {
+  seekTo (seconds, keepPlaying = true) {
     this.callPlayer('seek', seconds)
+    if (!keepPlaying) {
+      this.pause()
+    }
   }
 
   setVolume (fraction) {

@@ -1,15 +1,8 @@
 import React, { Component } from 'react'
-import { findDOMNode } from 'react-dom'
-import { hot } from 'react-hot-loader'
 import screenfull from 'screenfull'
 
-import './reset.css'
-import './defaults.css'
-import './range.css'
-import './App.css'
-
-import { version } from '../../package.json'
-import ReactPlayer from '../index'
+import { version } from '../../../package.json'
+import ReactPlayer from '../../..'
 import Duration from './Duration'
 
 class App extends Component {
@@ -133,7 +126,7 @@ class App extends Component {
   }
 
   handleClickFullscreen = () => {
-    screenfull.request(findDOMNode(this.player))
+    screenfull.request(document.querySelector('.react-player'))
   }
 
   renderLoadButton = (url, label) => {
@@ -184,6 +177,7 @@ class App extends Component {
               onError={e => console.log('onError', e)}
               onProgress={this.handleProgress}
               onDuration={this.handleDuration}
+              onPlaybackQualityChange={e => console.log('onPlaybackQualityChange', e)}
             />
           </div>
 
@@ -434,4 +428,4 @@ class App extends Component {
   }
 }
 
-export default hot(module)(App)
+export default App

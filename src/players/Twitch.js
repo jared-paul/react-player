@@ -36,7 +36,7 @@ export default class Twitch extends Component {
         channel: isChannel ? id : '',
         height: '100%',
         width: '100%',
-        playsinline: playsinline,
+        playsinline,
         autoplay: this.props.playing,
         muted: this.props.muted,
         // https://github.com/CookPete/react-player/issues/733#issuecomment-549085859
@@ -69,8 +69,11 @@ export default class Twitch extends Component {
     this.callPlayer('pause')
   }
 
-  seekTo (seconds) {
+  seekTo (seconds, keepPlaying = true) {
     this.callPlayer('seek', seconds)
+    if (!keepPlaying) {
+      this.pause()
+    }
   }
 
   setVolume (fraction) {
