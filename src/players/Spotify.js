@@ -47,17 +47,25 @@ export default class Spotify extends Component {
       this.player.addListener("playback_update", this.onStateChange);
       this.player.addListener("ready", this.props.onReady);
       try {
-      this.player.loadUri();
+        this.player.loadUri();
       } catch (error) {
-        console.log("Error loading URI", error);
+        this.handleError(new Error("Error loading URI: " + error.message));
       }
     };
     if (IFrameAPI && typeof IFrameAPI.createController === "function") {
       IFrameAPI.createController(this.container, options, callback);
     } else if (!IFrameAPI) {
-      console.error("yea so IFrameAPI is not available");
-    } else if (typeof IFrameAPI.createController === "function") {
-      console.error("yea so IFrameAPI.createController is not a function");
+      this.handleError(new Error("IFrameAPI is not available"));
+    } else if (typeof IFrameAPI.createController !== "function") {
+      this.handleError(new Error("IFrameAPI.createController is not a function"));
+    }
+  };
+
+  handleError = (error) => {
+    if (this.props.onError) {
+      this.props.onError(error);
+    } else {
+      console.error(error);
     }
   };
 
