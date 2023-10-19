@@ -46,7 +46,11 @@ export default class Spotify extends Component {
       this.player = EmbedController;
       this.player.addListener("playback_update", this.onStateChange);
       this.player.addListener("ready", this.props.onReady);
+      try {
       this.player.loadUri();
+      } catch (error) {
+        console.log("Error loading URI", error);
+      }
     };
     if (IFrameAPI && typeof IFrameAPI.createController === "function") {
       IFrameAPI.createController(this.container, options, callback);
