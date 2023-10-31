@@ -29,8 +29,10 @@ export default class Spotify extends Component {
       return;
     }
 
-    window.onSpotifyIframeApiReady = (IFrameAPI) =>
+    window.onSpotifyIframeApiReady = (IFrameAPI) => {
+      window[SDK_GLOBAL] = IFrameAPI;
       this.initializePlayer(IFrameAPI, url);
+    }
     getSDK(SDK_URL, SDK_GLOBAL, SDK_GLOBAL_READY);
   }
 
